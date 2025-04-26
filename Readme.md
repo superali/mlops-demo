@@ -55,7 +55,7 @@ This is a basic demo repository for deploying a Python-based AI assistant to AWS
 
     * Note: The `Dockerfile` is set up to copy your application code and dependencies into the container.
 
-6.  **Create ECR Repository and Deploy Image:**
+6.  **Deploy Image:**
 
     * The Terraform code will create an ECR repository for you.
     * You need to deploy the image to the ECR repository created by the Terraform code.
@@ -119,9 +119,8 @@ This is a basic demo repository for deploying a Python-based AI assistant to AWS
 
 ## Important Notes
 
-* **ECR Deployment:** You **must** build the Docker image and push it to the ECR repository created by Terraform *before* running `terraform apply`. Terraform needs the image to be available in ECR when it creates the Lambda function.
-* **Lambda Timeout:** The Lambda function has a timeout of 10 minutes. If your assistant's research process takes longer than that, you may need to increase the timeout in the `terraform_null_provider_config` file.
+* **ECR Deployment:** You **must** build the Docker image and push it to the ECR repository created by Terraform *after* running `terraform apply` for the first time. Terraform needs the image to be available in ECR when it creates the Lambda function.
+
 * **API Gateway:** The API Gateway is configured to be public (`authorization = "NONE"`).
 * **Logging:** The Lambda function logs to CloudWatch.
-* **Environment Variables:** The Lambda function uses environment variables for configuration, including API keys. These are set in the `terraform_null_provider_config` file. You will need to set the `OPENAI_API_KEY` and `ANTHROPIC_API_KEY` variables in your Terraform configuration or as environment variables.
-* **Lambda Layer**: There is a lambda layer.
+* **Environment Variables:** The Lambda function uses environment variables for configuration, including API keys. You will need to set the  `ANTHROPIC_API_KEY` variable in your Terraform configuration or as environment variables.
